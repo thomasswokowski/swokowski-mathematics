@@ -1,0 +1,140 @@
+{% extends "swo_app/base.html" %}
+{% load static %}
+{% block content %}
+    <!-- Page Content -->
+<div class="container-fliud">
+
+    <div class="row m-auto">
+        
+        <div class="col-lg-6 my-2">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="{{lesson.video}}" allowfullscreen></iframe>
+            </div>  
+             
+            <div class="text-center">
+                <input id="previous" type="button" class="page-link bg-primary text-light d-inline-block w-25 m-1" onclick="previousPage()" value="previous" />
+                <input id="next" type="button" class="page-link bg-primary text-light d-inline-block w-25 m-1" onclick="nextPage()" value="next" />
+            </div>
+        </div>
+
+        <div class="col-lg-6 my-2">
+            <div class="card h-100">
+                <div class="card-header"> 
+                    <ul class="nav nav-tabs card-header-tabs pull-right" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="lesson-tab" data-toggle="tab" href="#lesson" role="tab" aria-controls="lesson" aria-selected="true">Lesson</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="worksheet-tab" data-toggle="tab" href="#worksheet" role="tab" aria-controls="worksheet" aria-selected="false">Worksheet</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="answers-tab" data-toggle="tab" href="#answers" role="tab" aria-controls="answers" aria-selected="false">Answers</a>
+                        </li>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content h-100">
+                        <div class="tab-pane fade show active" id="lesson" role="tabpanel" aria-labelledby="lesson-tab">
+                            <h4 class="mb-4">Lesson {{ object.title }}</h4>
+                            <h5 class="my-3">Description:</h5>
+                            <p>{{ object.description }}</p>
+                            {% if user.is_authenticated %}
+                            <p>Contact swokowskimathematics@gmail.com for any questions.</p>
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane fade h-100" id="worksheet" role="tabpanel" aria-labelledby="worksheet-tab">
+                            <embed class="img-fluid h-100" src="{{ lesson.worksheet }}" width="800px" height="800px" alt="">          
+                        </div>
+                        <div class="tab-pane fade h-100" id="answers" role="tabpanel" aria-labelledby="answers-tab">
+                            <embed class="img-fluid h-100" src="{{ lesson.answerkey }}" width="800px" height="800px" alt="">          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row m-auto register-section">
+    <div class="col-lg-6 my-5">
+        
+        <div class="text-center">
+            <a href="{% url 'app-course' %}"><button class="btn btn-primary w-75">Back to Course Page</button></a>
+        </div>
+    </div>
+
+    <div class="col-lg-6 my-5">
+        <img src="{% static 'swo_app/img/logo.png' %}" alt="" class="img-fluid mb-2 rounded">
+    </div>
+
+    <h1 id="test"></h1>
+
+</div>
+
+<script type="text/javascript">
+
+    var lessonList = [];
+    var currentIndex = 0;
+    var lessonSlug = '{{lesson.slug}}';
+    
+    function buildList() {
+        '{% for lesson in object_list %}'
+        lessonList.push('{{lesson}}');
+        '{% endfor %}'
+    }
+    
+    function getCurrentIndex() {
+        currentIndex = lessonList.indexOf('{{lesson.slug}}');
+    }
+
+    function check() {
+        document.getElementById("previous").disabled = currentIndex == 0 ? true : false;
+        document.getElementById("next").disabled = currentIndex == (lessonList.length - 1) ? true : false;
+
+
+        if (currentIndex == 0) {
+            var element = document.getElementById("previous");
+            element.classList.toggle("bg-primary", false);
+            element.classList.toggle("bg-primary-disabled", true); 
+        } else if (currentIndex == (lessonList.length - 1)) {
+            var element = document.getElementById("next");
+            element.classList.toggle("bg-primary", false);
+            element.classList.toggle("bg-primary-disabled", true);     
+        }
+    }
+
+    function previousPage() {
+        currentIndex -= 1;
+        lessonSlug = lessonList[currentIndex]
+        setPage();
+    }
+
+    function nextPage() {
+        currentIndex += 1;
+        setPage();
+    }
+
+    function setPage() {
+        lessonSlug = lessonList[currentIndex]
+        
+        if (lessonSlug != undefined) {
+            window.location.href = "{% url 'app-course' %}" + lessonSlug;
+        } else {
+            load();
+        }
+    }
+    
+    function load() {
+        '{% if lesson.chapter > 1 and not user.is_authenticated %}'
+            window.location.href = "{% url 'register' %}"
+        '{% else %}'
+            buildList();
+            getCurrentIndex();
+            check();
+        '{% endif %}'
+    }
+
+    window.onload = load;
+</script>
+
+
+{% endblock content %}

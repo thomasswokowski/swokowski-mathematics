@@ -1,0 +1,27 @@
+{% extends "swo_app/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="conatiner-fluid">
+<div class="content-section">
+    <div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+        </div>
+    </div>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-6">
+                <legend class="border-bottom-mb-4">Profile Info</legend>
+                <fieldset class="form-group">
+                        {{ u_form|crispy }}
+                </fieldset>
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+{% endblock content %}

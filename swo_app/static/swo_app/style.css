@@ -1,0 +1,82 @@
+body {
+    background: rgb(220,220,220);
+}
+
+.header-section {
+    background: black;
+}
+
+.slider-img {
+    opacity: 0.3;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+#home-section {
+    background: rgb(75,0,130);
+}
+
+#main-nav {
+    background: rgb(75,0,130);
+    border-bottom: 5px solid white;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.card-form {
+    border: none;
+}
+
+.register-section {
+    background: rgb(75,0,130);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.btn {
+    background: white;
+    color: rgb(75,0,130);
+    font-weight: bold;   
+}
+
+.btn:hover {
+    background:rgb(75,0,130);
+    color: white;
+}
+
+.content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.about-section {
+    background: rgb(220,220,220);
+}
+
+.testimonals-section {
+    background: rgb(75,0,130);
+}
+
+.home-bottom-section {
+    background: rgb(75,0,130);
+}
+
+.get-started-section {
+    background: rgb(220,220,220);
+}
+
+#main-footer {
+    background: rgb(75,0,130);
+}
+

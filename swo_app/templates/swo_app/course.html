@@ -1,0 +1,43 @@
+{% extends "swo_app/base.html" %}
+{% load static %}
+{% block content %}
+<section id="explore-head-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center py-4">
+                <h1 class="display-4">Full Algebra Course</h1>
+                <p class="lead">Click on a lesson below to begin learning.</p>
+                {% if not user.is_authenticated %}
+                <p>(You must login/register to view all lessons.)</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container-fluid">
+    <div class="row text-center mb-5">
+        {% for chapter in chapters %}
+        <div class="col-lg-4 col-md-6">
+            <h3 class="mb-2">Chapter {{ chapter }}</h3>
+            {% for lesson in lessons %}
+            {% if lesson.chapter == chapter and chapter == 1 %}
+            <ul class="lesson-list mb-4">
+                <li class="mb-3"><a class="list-group-item list-group-item-action" href="{% url 'lesson-detail' lesson.slug %}">{{ lesson.title }}</a></li>
+            </ul>
+            {% elif lesson.chapter == chapter and chapter > 1 and not user.is_authenticated %}
+            <ul class="lesson-list mb-4">
+                <li class="mb-3"><a class="list-group-item disabled list-group-item-action" href="{% url 'lesson-detail' lesson.slug %}" style="background: rgb(220,220,220); color: black;">{{ lesson.title }}</a></li>
+            </ul>
+            {% elif lesson.chapter == chapter and chapter > 1 and user.is_authenticated %}
+            <ul class="lesson-list mb-4">
+                <li class="mb-3"><a class="list-group-item list-group-item-action" href="{% url 'lesson-detail' lesson.slug %}">{{ lesson.title }}</a></li>
+            </ul>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

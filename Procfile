@@ -1,0 +1,1 @@
+web: gunicorn swomath_project.wsgi
