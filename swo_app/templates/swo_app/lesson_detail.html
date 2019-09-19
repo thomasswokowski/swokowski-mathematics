@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <!-- Page Content -->
-<div class="container-fliud">
+<div class="container-fliud register-section">
 
     <div class="row m-auto">
         
@@ -54,20 +54,17 @@
     </div>
 </div>
 
-<div class="row m-auto register-section">
-    <div class="col-lg-6 my-5">
-        
+<div class="row m-auto">
+    <div class="col-lg-6 my-5"> 
         <div class="text-center">
-            <a href="{% url 'app-course' %}"><button class="btn btn-primary w-75">Back to Course Page</button></a>
+            <a href="{% url 'app-course' %}" class="btn btn-outline-secondary w-75 mb-5">Back to Course Page</a>
+            <a href="{% url 'app-donate' %}" class="btn btn-outline-secondary w-75">Make a Donation</a>
         </div>
     </div>
 
     <div class="col-lg-6 my-5">
         <img src="{% static 'swo_app/img/logo.png' %}" alt="" class="img-fluid mb-2 rounded">
     </div>
-
-    <h1 id="test"></h1>
-
 </div>
 
 <script type="text/javascript">

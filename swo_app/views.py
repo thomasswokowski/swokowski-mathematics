@@ -39,4 +39,7 @@ class LessonDetailView(DetailView):
 def terms(request):
     return render(request, 'swo_app/terms.html')
 
+def donate(request):
+    return render(request, 'swo_app/donate.html')
+
     

@@ -42,8 +42,7 @@ a:hover {
     font-weight: bold;   
 }
 
-.btn:hover {
-    background:rgb(75,0,130);
+.btn-primary:hover {
     color: white;
 }
 
