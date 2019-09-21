@@ -55,9 +55,9 @@ class DonatePageView(TemplateView):
 def charge(request):
     if request.method == 'POST':
         charge = stripe.Charge.create(
-            amount=500,
+            amount=request.POST['amountInCents'],
             currency='usd',
-            description='A Django charge',
+            description='Swokowski Mathematics Donation',
             source=request.POST['stripeToken']
         )
         return render(request, 'swo_app/charge.html')
