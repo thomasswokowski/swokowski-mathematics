@@ -150,4 +150,7 @@ AWS_DEFAULT_ACL = None
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+STRIPE_SECRET_KEY = os.environ.get('SECRET_KEY')
+STRIPE_PUBLISHABLE_KEY = os.environ.get('PUBLISHABLE_KEY')
+
 django_heroku.settings(locals())

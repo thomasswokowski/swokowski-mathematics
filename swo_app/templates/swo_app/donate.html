@@ -1,8 +1,5 @@
 {% extends "swo_app/base.html" %}
 {% load static %}
-{% block stripe %}
-    <script src="https://js.stripe.com/v3/"></script>
-{% endblock stripe %}
 {% block content %}
 <div class="container-fliud">
 <div class="content-section">
@@ -28,11 +25,78 @@
                 Whether it's for improvements to this website, for better materials to create the content, or for marketing 
                 purposes to reach more students, your contribution will be greatly valued. Thanks again! -John
             </p>
+
+
+            <script src="https://checkout.stripe.com/checkout.js"></script>
+            <h4>Enter an amount: </h4>
+            <form id="myForm" action="{% url 'app-charge' %}" method="POST">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
+                    <input class="w-50" type="number" value="10" min="5" id="amountInDollars" />
+                    <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
+                <small>(Minimum of $5.00 due to processing fees.)</small>
+                <input type="hidden" id="stripeToken" name="stripeToken" />
+                <input type="hidden" id="stripeEmail" name="stripeEmail" />
+                <input type="hidden" id="amountInCents" name="amountInCents" />
+            </form> 
+            <input class="btn btn-primary mt-3" type="button" id="customButton" value="Donate">
+            
         </div>
+
         <div class="col-lg-6">
             <img src="{% static 'swo_app/img/logo.png' %}" alt="" class="img-fluid mb-2 mt-4 rounded">
         </div>
+        
     </div>
 </div>
 </div>
+
 {% endblock content %}
+
+{% block stripe %}
+
+<script type="text/javascript">
+    var handler = StripeCheckout.configure({
+        key: '{{ key }}',
+        image: "{% static 'swo_app/img/logo.png' %}",
+        token: function(token) {
+            $("#stripeToken").val(token.id);
+            $("#stripeEmail").val(token.email);
+            $("#amountInCents").val(Math.floor($("#amountInDollars").val() * 100));
+            $("#myForm").submit();
+        }
+    });
+
+    $('#customButton').on('click', function(e) {
+
+        var amountInCents = Math.floor($("#amountInDollars").val() * 100);
+        var displayAmount = parseFloat(Math.floor($("#amountInDollars").val() * 100) / 100).toFixed(2);
+
+        if (amountInCents < 500) {
+            amountInCents = 500;
+            displayAmount = 5;
+            displayAmount = displayAmount.toFixed(2);
+        }
+        
+        // Open Checkout with further options
+        handler.open({
+            name: 'Swokowski Mathematics',
+            description: 'Donation amount ($' + displayAmount + ')',
+            amount: amountInCents,
+            });
+            e.preventDefault();
+    });
+
+    // Close Checkout on page navigation
+    $(window).on('popstate', function() {
+        handler.close();
+    });
+</script>
+
+{% endblock stripe %}

@@ -1,0 +1,19 @@
+{% extends "swo_app/base.html" %}
+{% load static %}
+{% block content %}
+<div class="container-fliud">
+<div class="content-section">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>THANK YOU!</h1>
+            <p class="mb-5">Thank you so much for your donation! Have a great day!</p>
+            <a href="{% url 'app-course' %}" class="btn btn-outline-secondary">Return to Course</a>            
+        </div>
+        <div class="col-lg-6">
+            <img src="{% static 'swo_app/img/logo.png' %}" alt="" class="img-fluid mb-2 mt-4 rounded">
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock content %}
