@@ -7,9 +7,16 @@
     <div class="row m-auto">
         
         <div class="col-lg-6 my-2">
+            <!--
             <div class="embed-responsive embed-responsive-16by9">
                 <iframe class="embed-responsive-item" src="{{lesson.video}}" allowfullscreen></iframe>
-            </div>  
+            </div>
+            -->
+            <div class="embed-responsive embed-responsive-16by9"> 
+                <video controls>
+                    <source src="{{lesson.video}}" type="video/mp4">
+                </video>
+            </div> 
              
             <div class="text-center">
                 <input id="previous" type="button" class="page-link bg-primary text-light d-inline-block w-25 m-1" onclick="previousPage()" value="previous" />
