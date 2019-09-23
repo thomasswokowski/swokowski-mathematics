@@ -7,13 +7,8 @@
     <div class="row m-auto">
         
         <div class="col-lg-6 my-2">
-            <!--
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="{{lesson.video}}" allowfullscreen></iframe>
-            </div>
-            -->
             <div class="embed-responsive embed-responsive-16by9"> 
-                <video controls>
+                <video controls poster="{% static 'swo_app/img/logo.png' %}">
                     <source src="{{lesson.video}}" type="video/mp4">
                 </video>
             </div> 
